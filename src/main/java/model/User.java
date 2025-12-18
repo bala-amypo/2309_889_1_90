@@ -3,9 +3,11 @@ package com.example.domo.model;
 
 public class User{
     private Long id;
-    private string fullName;
+    private String fullName;
     @Column(unique=true)
-    private string email;
-    private string password;
-    private 
+    private String email;
+    private String password;
+    private String ADMIN; 
+    private String USER;
+    private LocalDateTime createdAt;
 }
