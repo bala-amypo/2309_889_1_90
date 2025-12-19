@@ -7,5 +7,6 @@ public class DuplicateRule{
     private String KEYWORD;
     private String SIMILARITY;
     private String EXACT_MATCH;
-    
+    private Double threshold;
+    private LocalDateTime createdAt;
 }
