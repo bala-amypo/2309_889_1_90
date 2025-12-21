@@ -1,54 +1,15 @@
-package com.example.domo.service;
+package com.example.demo.service;
 
-import java.time.LocalDateTime;
+import com.example.demo.model.Ticket;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface TicketService {
 
-import com.example.domo.model.Ticket;
-import com.example.domo.repository.TicketRepository;
+    Ticket createTicket(Long userId, Long categoryId, Ticket ticket);
 
-@Service
-public class TicketServiceImpl implements TicketService {
+    Ticket getTicket(Long ticketId);
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    List<Ticket> getTicketsByUser(Long userId);
 
-    @Override
-    public Ticket createTicket(Ticket ticket) {
-        ticket.setCreatedAt(LocalDateTime.now());
-        return ticketRepository.save(ticket);
-    }
-
-    @Override
-    public Ticket updateTicket(Long id, Ticket ticket) {
-        Ticket existingTicket = ticketRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
-
-        existingTicket.setSubject(ticket.getSubject());
-        existingTicket.setDescription(ticket.getDescription());
-        existingTicket.setOPEN(ticket.getOPEN());
-        existingTicket.setIN_PROGRESS(ticket.getIN_PROGRESS());
-        existingTicket.setRESOLVED(ticket.getRESOLVED());
-        existingTicket.setCLOSED(ticket.getCLOSED());
-
-        return ticketRepository.save(existingTicket);
-    }
-
-    @Override
-    public void deleteTicket(Long id) {
-        ticketRepository.deleteById(id);
-    }
-
-    @Override
-    public Optional<Ticket> getTicketById(Long id) {
-        return ticketRepository.findById(id);
-    }
-
-    @Override
-    public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
-    }
+    List<Ticket> getAllTickets();
 }
