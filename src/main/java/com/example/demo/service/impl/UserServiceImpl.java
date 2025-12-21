@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(User user) {
 
-        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
-            throw new IllegalArgumentException("Username must not be empty");
+        if (user.getName() == null || user.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("User name must not be empty");
         }
 
         user.setCreatedAt(LocalDateTime.now());
