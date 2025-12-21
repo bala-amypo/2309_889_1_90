@@ -1,13 +1,8 @@
 package com.example.demo.service;
-
-import com.example.demo.model.DuplicateRule;
+import com.example.demo.model.DuplicateDetectionLog;
 import java.util.List;
-
-public interface DuplicateRuleService {
-
-    DuplicateRule createRule(DuplicateRule rule);
-
-    DuplicateRule getRule(Long id);
-
-    List<DuplicateRule> getAllRules();
+public interface DuplicateDetectionService {
+ List<DuplicateDetectionLog> detectDuplicates(Long ticketId);
+ List<DuplicateDetectionLog> getLogsForTicket(Long ticketId);
+ DuplicateDetectionLog getLog(Long id);
 }
