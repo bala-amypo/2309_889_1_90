@@ -21,10 +21,10 @@ public class DuplicateRule {
     @Column(nullable = false)
     private Double threshold;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "rule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "rule", cascade = CascadeType.ALL)
     private List<DuplicateDetectionLog> logs;
 
     public DuplicateRule() {
@@ -34,11 +34,6 @@ public class DuplicateRule {
         this.ruleName = ruleName;
         this.matchType = matchType;
         this.threshold = threshold;
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -75,6 +70,11 @@ public class DuplicateRule {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    // 🔴 REQUIRED FIX
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public List<DuplicateDetectionLog> getLogs() {
