@@ -1,42 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.TicketCategory;
 import com.example.demo.repository.TicketCategoryRepository;
 import com.example.demo.service.TicketCategoryService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class TicketCategoryServiceImpl implements TicketCategoryService {
 
-    private final TicketCategoryRepository ticketCategoryRepository;
+    private final TicketCategoryRepository categoryRepository;
 
-    public TicketCategoryServiceImpl(TicketCategoryRepository ticketCategoryRepository) {
-        this.ticketCategoryRepository = ticketCategoryRepository;
+    public TicketCategoryServiceImpl(TicketCategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public TicketCategory createCategory(TicketCategory category) {
-
-        if (ticketCategoryRepository.existsByCategoryName(category.getCategoryName())) {
-            throw new IllegalArgumentException("Category already exists");
+        if (categoryRepository.existsByCategoryName(category.getCategoryName())) {
+            throw new RuntimeException("Category already exists");
         }
-
-        category.setCreatedAt(LocalDateTime.now());
-        return ticketCategoryRepository.save(category);
-    }
-
-    @Override
-    public List<TicketCategory> getAllCategories() {
-        return ticketCategoryRepository.findAll();
+        return categoryRepository.save(category);
     }
 
     @Override
     public TicketCategory getCategory(Long id) {
-        return ticketCategoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Category not found"));
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+    }
+
+    @Override
+    public List<TicketCategory> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }
